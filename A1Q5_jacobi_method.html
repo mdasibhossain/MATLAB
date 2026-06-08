@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>A1Q5_jacobi_method</title>
+<meta name="generator" content="MATLAB 24.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2025-12-10">
+<meta name="DC.source" content="A1Q5_jacobi_method.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<pre class="codeinput">tol=10^-5;
+x1=1;x2=1;x3=1;
+max_ietr=100;
+disp(<span class="string">"iter   x1     x2      x3 "</span>)
+disp(<span class="string">"____________________________"</span>)
+<span class="keyword">for</span> i=1:max_ietr
+    x1_new=(24-3*x2)/4.0;
+    x2_new=(30-3*x1+x3)/4.0;
+    x3_new=(-24+x2)/4.0;
+    error=max(abs(x1_new-x1),max(abs(x2_new-x2),abs(x3_new-x3)));
+    fprintf(<span class="string">"\n %3d %6f %6f %6f"</span>,i,x1_new,x2_new,x3_new)
+    <span class="keyword">if</span> error&lt;tol
+      fprintf(<span class="string">"\n %3d Converged "</span>)
+      <span class="keyword">break</span>;
+    <span class="keyword">end</span>
+    x1=x1_new;
+    x2=x2_new;
+    x3=x3_new;
+
+
+<span class="keyword">end</span>
+fprintf(<span class="string">"The solution of the system\n"</span>)
+fprintf(<span class="string">"x1= %6f \n"</span>,x1_new)
+fprintf(<span class="string">"x2= %6f \n"</span>,x2_new)
+fprintf(<span class="string">"x3= %6f \n"</span>,x3_new)
+</pre>
+<pre class="codeoutput">iter   x1     x2      x3 
+____________________________
+
+   1 5.250000 7.000000 -5.750000
+   2 0.750000 2.125000 -4.250000
+   3 4.406250 5.875000 -5.468750
+   4 1.593750 2.828125 -4.531250
+   5 3.878906 5.171875 -5.292969
+   6 2.121094 3.267578 -4.707031
+   7 3.549316 4.732422 -5.183105
+   8 2.450684 3.542236 -4.816895
+   9 3.343323 4.457764 -5.114441
+  10 2.656677 3.713898 -4.885559
+  11 3.214577 4.286102 -5.071526
+  12 2.785423 3.821186 -4.928474
+  13 3.134110 4.178814 -5.044703
+  14 2.865890 3.888241 -4.955297
+  15 3.083819 4.111759 -5.027940
+  16 2.916181 3.930151 -4.972060
+  17 3.052387 4.069849 -5.017462
+  18 2.947613 3.956344 -4.982538
+  19 3.032742 4.043656 -5.010914
+  20 2.967258 3.972715 -4.989086
+  21 3.020464 4.027285 -5.006821
+  22 2.979536 3.982947 -4.993179
+  23 3.012790 4.017053 -5.004263
+  24 2.987210 3.989342 -4.995737
+  25 3.007994 4.010658 -5.002665
+  26 2.992006 3.993339 -4.997335
+  27 3.004996 4.006661 -5.001665
+  28 2.995004 3.995837 -4.998335
+  29 3.003123 4.004163 -5.001041
+  30 2.996877 3.997398 -4.998959
+  31 3.001952 4.002602 -5.000651
+  32 2.998048 3.998374 -4.999349
+  33 3.001220 4.001626 -5.000407
+  34 2.998780 3.998984 -4.999593
+  35 3.000762 4.001016 -5.000254
+  36 2.999238 3.999365 -4.999746
+  37 3.000476 4.000635 -5.000159
+  38 2.999524 3.999603 -4.999841
+  39 3.000298 4.000397 -5.000099
+  40 2.999702 3.999752 -4.999901
+  41 3.000186 4.000248 -5.000062
+  42 2.999814 3.999845 -4.999938
+  43 3.000116 4.000155 -5.000039
+  44 2.999884 3.999903 -4.999961
+  45 3.000073 4.000097 -5.000024
+  46 2.999927 3.999939 -4.999976
+  47 3.000045 4.000061 -5.000015
+  48 2.999955 3.999962 -4.999985
+  49 3.000028 4.000038 -5.000009
+  50 2.999972 3.999976 -4.999991
+  51 3.000018 4.000024 -5.000006
+  52 2.999982 3.999985 -4.999994
+  53 3.000011 4.000015 -5.000004
+  54 2.999989 3.999991 -4.999996
+  55 3.000007 4.000009 -5.000002
+  56 2.999993 3.999994 -4.999998
+  57 3.000004 4.000006 -5.000001
+  58 2.999996 3.999996 -4.999999
+ The solution of the system
+x1= 2.999996 
+x2= 3.999996 
+x3= -4.999999 
+</pre>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+tol=10^-5;
+x1=1;x2=1;x3=1;
+max_ietr=100;
+disp("iter   x1     x2      x3 ")
+disp("____________________________")
+for i=1:max_ietr 
+    x1_new=(24-3*x2)/4.0;
+    x2_new=(30-3*x1+x3)/4.0;
+    x3_new=(-24+x2)/4.0;
+    error=max(abs(x1_new-x1),max(abs(x2_new-x2),abs(x3_new-x3)));
+    fprintf("\n %3d %6f %6f %6f",i,x1_new,x2_new,x3_new)
+    if error<tol
+      fprintf("\n %3d Converged ")
+      break;
+    end
+    x1=x1_new;
+    x2=x2_new;
+    x3=x3_new;
+
+
+end 
+fprintf("The solution of the system\n")
+fprintf("x1= %6f \n",x1_new)
+fprintf("x2= %6f \n",x2_new)
+fprintf("x3= %6f \n",x3_new)
+
+##### SOURCE END #####
+-->
+</body>
+</html>

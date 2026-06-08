@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>Assaignment__2_Q3</title>
+<meta name="generator" content="MATLAB 24.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2026-01-28">
+<meta name="DC.source" content="Assaignment__2_Q3.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<pre class="codeinput">clc;clear;
+
+a=23621;
+b=16376;
+c=23;
+<span class="comment">%Eucledian Algorithom</span>
+r1=a;
+r2=b;
+<span class="comment">%Coefficient of a &amp; b</span>
+s1=1;s2=0;
+t1=0;t2=1;
+<span class="keyword">while</span> r2~=0
+q=floor(r1/r2);
+r=r1-q*r2;
+s=s1-q*s2;
+t=t1-q*t2;
+fprintf(<span class="string">'r1=%d,q=%d,r2=%d,remainder r=%d\n'</span>,r1,q,r2,r);
+<span class="comment">%updated Value</span>
+r1=r2;
+r2=r;
+s1=s2;
+s2=s;
+t1=t2;
+t2=t;
+<span class="keyword">end</span>
+
+<span class="comment">%Result</span>
+d=r1;
+x0=s1;
+y0=t1;
+fprintf(<span class="string">'\n GCD=%d\n'</span>,d);
+fprintf(<span class="string">'Linear COmbination: %d*a+%d*b=%d\n'</span>,x0,y0,d)
+<span class="comment">%Built in function</span>
+[g,u,v]=gcd(23621,16376);
+fprintf(<span class="string">'\n GCD=%d\n'</span>,g);
+fprintf(<span class="string">'Check: %d*a + %d*b = %d\n'</span>, u,  v, g);
+</pre>
+<pre class="codeoutput">r1=23621,q=1,r2=16376,remainder r=7245
+r1=16376,q=2,r2=7245,remainder r=1886
+r1=7245,q=3,r2=1886,remainder r=1587
+r1=1886,q=1,r2=1587,remainder r=299
+r1=1587,q=5,r2=299,remainder r=92
+r1=299,q=3,r2=92,remainder r=23
+r1=92,q=4,r2=23,remainder r=0
+
+ GCD=23
+Linear COmbination: -165*a+238*b=23
+
+ GCD=23
+Check: -165*a + 238*b = 23
+</pre>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+clc;clear;
+
+a=23621;
+b=16376;
+c=23;
+%Eucledian Algorithom
+r1=a;
+r2=b;
+%Coefficient of a & b
+s1=1;s2=0;
+t1=0;t2=1;
+while r2~=0
+q=floor(r1/r2);
+r=r1-q*r2;
+s=s1-q*s2;
+t=t1-q*t2;
+fprintf('r1=%d,q=%d,r2=%d,remainder r=%d\n',r1,q,r2,r);
+%updated Value
+r1=r2;
+r2=r;
+s1=s2;
+s2=s;
+t1=t2;
+t2=t;
+end
+
+%Result
+d=r1;
+x0=s1;
+y0=t1;
+fprintf('\n GCD=%d\n',d);
+fprintf('Linear COmbination: %d*a+%d*b=%d\n',x0,y0,d)
+%Built in function
+[g,u,v]=gcd(23621,16376);
+fprintf('\n GCD=%d\n',g);
+fprintf('Check: %d*a + %d*b = %d\n', u,  v, g);
+
+
+
+
+
+##### SOURCE END #####
+-->
+</body>
+</html>

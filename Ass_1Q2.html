@@ -1,0 +1,400 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>Ass_1Q2</title>
+<meta name="generator" content="MATLAB 24.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2025-12-03">
+<meta name="DC.source" content="Ass_1Q2.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<pre class="codeinput">clc;clear <span class="string">all</span>;
+tol=10^-4;
+x0=1.5;
+maxIter=100;
+g{1} = @(x)( x - x.^3 - 4*x.^2 + 10);
+g{2}=@(x)(sqrt(10/x -4*x));
+g{3} = @(x) 0.5*sqrt(10 - x.^2);
+g{4} = @(x) sqrt(10./(4 + x));
+g{5} = @(x) x - (x.^3 + 4*x.^2 - 10) ./ (3*x.^2 + 8*x);
+
+<span class="keyword">for</span> k=1:5
+    fprintf(<span class="string">"\n===== g_%d(x) ITERATION =====\n"</span>, k);
+    disp(<span class="string">"Iteration    x_new   "</span>)
+   disp(<span class="string">"__________________________-"</span>)
+    x_old=x0;
+    <span class="keyword">for</span> n=1:maxIter
+        x_new=g{k}(x_old);
+        fprintf(<span class="string">"\n %3d %6f "</span>,n,x_new)
+        <span class="keyword">if</span> abs(x_new-x_old)&lt;tol
+            disp(<span class="string">"The function is converged"</span>);
+            <span class="keyword">break</span>;
+        <span class="keyword">end</span>
+        x_old=x_new;
+    <span class="keyword">end</span>
+    <span class="keyword">if</span> n==maxIter
+        fprintf(<span class="string">"Did not conveged "</span>)
+    <span class="keyword">end</span>
+    fprintf(<span class="string">"\n root= %6f "</span>,x_new)
+<span class="keyword">end</span>
+</pre>
+<pre class="codeoutput">
+===== g_1(x) ITERATION =====
+Iteration    x_new   
+__________________________-
+
+   1 -0.875000 
+   2 6.732422 
+   3 -469.720012 
+   4 102754555.187385 
+   5 -1084933870531746486812672.000000 
+   6 1277055591444378466573438322982097922987374859897466271890545849990643712.000000 
+   7 -2082712908581027140718627596215125198233566834955693738186359378372116057292259890311226411168586473990737217273401843816752280680672161989639911787609956906414784487338066489602776531929857389090717236430155817156608.000000 
+   8    NaN 
+   9    NaN 
+  10    NaN 
+  11    NaN 
+  12    NaN 
+  13    NaN 
+  14    NaN 
+  15    NaN 
+  16    NaN 
+  17    NaN 
+  18    NaN 
+  19    NaN 
+  20    NaN 
+  21    NaN 
+  22    NaN 
+  23    NaN 
+  24    NaN 
+  25    NaN 
+  26    NaN 
+  27    NaN 
+  28    NaN 
+  29    NaN 
+  30    NaN 
+  31    NaN 
+  32    NaN 
+  33    NaN 
+  34    NaN 
+  35    NaN 
+  36    NaN 
+  37    NaN 
+  38    NaN 
+  39    NaN 
+  40    NaN 
+  41    NaN 
+  42    NaN 
+  43    NaN 
+  44    NaN 
+  45    NaN 
+  46    NaN 
+  47    NaN 
+  48    NaN 
+  49    NaN 
+  50    NaN 
+  51    NaN 
+  52    NaN 
+  53    NaN 
+  54    NaN 
+  55    NaN 
+  56    NaN 
+  57    NaN 
+  58    NaN 
+  59    NaN 
+  60    NaN 
+  61    NaN 
+  62    NaN 
+  63    NaN 
+  64    NaN 
+  65    NaN 
+  66    NaN 
+  67    NaN 
+  68    NaN 
+  69    NaN 
+  70    NaN 
+  71    NaN 
+  72    NaN 
+  73    NaN 
+  74    NaN 
+  75    NaN 
+  76    NaN 
+  77    NaN 
+  78    NaN 
+  79    NaN 
+  80    NaN 
+  81    NaN 
+  82    NaN 
+  83    NaN 
+  84    NaN 
+  85    NaN 
+  86    NaN 
+  87    NaN 
+  88    NaN 
+  89    NaN 
+  90    NaN 
+  91    NaN 
+  92    NaN 
+  93    NaN 
+  94    NaN 
+  95    NaN 
+  96    NaN 
+  97    NaN 
+  98    NaN 
+  99    NaN 
+ 100    NaN Did not conveged 
+ root=    NaN 
+===== g_2(x) ITERATION =====
+Iteration    x_new   
+__________________________-
+
+   1 0.816497 
+   2 2.996909 
+   3 0.000000 
+   4 2.753622 
+   5 1.814992 
+   6 2.384266 
+   7 2.182772 
+   8 2.296998 
+   9 2.256510 
+  10 2.279179 
+  11 2.271143 
+  12 2.275631 
+  13 2.274040 
+  14 2.274928 
+  15 2.274613 
+  16 2.274789 
+  17 2.274727 
+  18 2.274762 
+  19 2.274749 
+  20 2.274756 
+  21 2.274754 
+  22 2.274755 
+  23 2.274755 
+  24 2.274755 
+  25 2.274755 
+  26 2.274755 
+  27 2.274755 
+  28 2.274755 
+  29 2.274755 
+  30 2.274755 
+  31 2.274755 
+  32 2.274755 
+  33 2.274755 
+  34 2.274755 
+  35 2.274755 
+  36 2.274755 
+  37 2.274755 
+  38 2.274755 
+  39 2.274755 
+  40 2.274755 
+  41 2.274755 
+  42 2.274755 
+  43 2.274755 
+  44 2.274755 
+  45 2.274755 
+  46 2.274755 
+  47 2.274755 
+  48 2.274755 
+  49 2.274755 
+  50 2.274755 
+  51 2.274755 
+  52 2.274755 
+  53 2.274755 
+  54 2.274755 
+  55 2.274755 
+  56 2.274755 
+  57 2.274755 
+  58 2.274755 
+  59 2.274755 
+  60 2.274755 
+  61 2.274755 
+  62 2.274755 
+  63 2.274755 
+  64 2.274755 
+  65 2.274755 
+  66 2.274755 
+  67 2.274755 
+  68 2.274755 
+  69 2.274755 
+  70 2.274755 
+  71 2.274755 
+  72 2.274755 
+  73 2.274755 
+  74 2.274755 
+  75 2.274755 
+  76 2.274755 
+  77 2.274755 
+  78 2.274755 
+  79 2.274755 
+  80 2.274755 
+  81 2.274755 
+  82 2.274755 
+  83 2.274755 
+  84 2.274755 
+  85 2.274755 
+  86 2.274755 
+  87 2.274755 
+  88 2.274755 
+  89 2.274755 
+  90 2.274755 
+  91 2.274755 
+  92 2.274755 
+  93 2.274755 
+  94 2.274755 
+  95 2.274755 
+  96 2.274755 
+  97 2.274755 
+  98 2.274755 
+  99 2.274755 
+ 100 2.274755 Did not conveged 
+ root= 2.274755 
+===== g_3(x) ITERATION =====
+Iteration    x_new   
+__________________________-
+
+   1 1.391941 
+   2 1.419727 
+   3 1.412832 
+   4 1.414559 
+   5 1.414127 
+   6 1.414235 
+   7 1.414208 The function is converged
+
+ root= 1.414208 
+===== g_4(x) ITERATION =====
+Iteration    x_new   
+__________________________-
+
+   1 1.348400 
+   2 1.367376 
+   3 1.364957 
+   4 1.365265 
+   5 1.365226 The function is converged
+
+ root= 1.365226 
+===== g_5(x) ITERATION =====
+Iteration    x_new   
+__________________________-
+
+   1 1.373333 
+   2 1.365262 
+   3 1.365230 The function is converged
+
+ root= 1.365230 </pre>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+clc;clear all;
+tol=10^-4;
+x0=1.5;
+maxIter=100;
+g{1} = @(x)( x - x.^3 - 4*x.^2 + 10);
+g{2}=@(x)(sqrt(10/x -4*x));
+g{3} = @(x) 0.5*sqrt(10 - x.^2);
+g{4} = @(x) sqrt(10./(4 + x));
+g{5} = @(x) x - (x.^3 + 4*x.^2 - 10) ./ (3*x.^2 + 8*x);
+
+for k=1:5
+    fprintf("\n===== g_%d(x) ITERATION =====\n", k);
+    disp("Iteration    x_new   ")
+   disp("__________________________-")
+    x_old=x0;
+    for n=1:maxIter
+        x_new=g{k}(x_old);
+        fprintf("\n %3d %6f ",n,x_new)
+        if abs(x_new-x_old)<tol
+            disp("The function is converged");
+            break;
+        end
+        x_old=x_new;
+    end
+    if n==maxIter 
+        fprintf("Did not conveged ")
+    end
+    fprintf("\n root= %6f ",x_new)
+end
+
+
+
+
+
+
+
+##### SOURCE END #####
+-->
+</body>
+</html>

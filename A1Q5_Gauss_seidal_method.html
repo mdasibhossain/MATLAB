@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>A1Q5_Gauss_seidal_method</title>
+<meta name="generator" content="MATLAB 24.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2025-12-10">
+<meta name="DC.source" content="A1Q5_Gauss_seidal_method.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<pre class="codeinput">clear <span class="string">all</span>;clc;
+tol=10^-5;
+x1=1;x2=1;x3=1;
+max_ietr=100;
+disp(<span class="string">"iter   x1     x2      x3 "</span>)
+disp(<span class="string">"____________________________"</span>)
+<span class="keyword">for</span> i=1:max_ietr
+    x1_new=(24-3*x2)/4.0;
+    x2_new=(30-3*x1_new+x3)/4.0;
+    x3_new=(-24+x2_new)/4.0;
+    error=max(abs(x1_new-x1),max(abs(x2_new-x2),abs(x3_new-x3)));
+    fprintf(<span class="string">"\n %3d %6f %6f %6f"</span>,i,x1_new,x2_new,x3_new)
+    <span class="keyword">if</span> error&lt;tol
+      fprintf(<span class="string">"\n Converged "</span>)
+      <span class="keyword">break</span>;
+    <span class="keyword">end</span>
+    x1=x1_new;
+    x2=x2_new;
+    x3=x3_new;
+
+
+<span class="keyword">end</span>
+fprintf(<span class="string">"The solution of the system\n"</span>)
+fprintf(<span class="string">"x1= %6f \n"</span>,x1_new)
+fprintf(<span class="string">"x2= %6f \n"</span>,x2_new)
+fprintf(<span class="string">"x3= %6f \n"</span>,x3_new)
+</pre>
+<pre class="codeoutput">iter   x1     x2      x3 
+____________________________
+
+   1 5.250000 3.812500 -5.046875
+   2 3.140625 3.882812 -5.029297
+   3 3.087891 3.926758 -5.018311
+   4 3.054932 3.954224 -5.011444
+   5 3.034332 3.971390 -5.007153
+   6 3.021458 3.982119 -5.004470
+   7 3.013411 3.988824 -5.002794
+   8 3.008382 3.993015 -5.001746
+   9 3.005239 3.995634 -5.001091
+  10 3.003274 3.997272 -5.000682
+  11 3.002046 3.998295 -5.000426
+  12 3.001279 3.998934 -5.000266
+  13 3.000799 3.999334 -5.000167
+  14 3.000500 3.999584 -5.000104
+  15 3.000312 3.999740 -5.000065
+  16 3.000195 3.999837 -5.000041
+  17 3.000122 3.999898 -5.000025
+  18 3.000076 3.999936 -5.000016
+  19 3.000048 3.999960 -5.000010
+  20 3.000030 3.999975 -5.000006
+  21 3.000019 3.999984 -5.000004
+  22 3.000012 3.999990 -5.000002
+ Converged The solution of the system
+x1= 3.000012 
+x2= 3.999990 
+x3= -5.000002 
+</pre>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+clear all;clc;
+tol=10^-5;
+x1=1;x2=1;x3=1;
+max_ietr=100;
+disp("iter   x1     x2      x3 ")
+disp("____________________________")
+for i=1:max_ietr 
+    x1_new=(24-3*x2)/4.0;
+    x2_new=(30-3*x1_new+x3)/4.0;
+    x3_new=(-24+x2_new)/4.0;
+    error=max(abs(x1_new-x1),max(abs(x2_new-x2),abs(x3_new-x3)));
+    fprintf("\n %3d %6f %6f %6f",i,x1_new,x2_new,x3_new)
+    if error<tol
+      fprintf("\n Converged ")
+      break;
+    end
+    x1=x1_new;
+    x2=x2_new;
+    x3=x3_new;
+
+
+end 
+fprintf("The solution of the system\n")
+fprintf("x1= %6f \n",x1_new)
+fprintf("x2= %6f \n",x2_new)
+fprintf("x3= %6f \n",x3_new)
+
+##### SOURCE END #####
+-->
+</body>
+</html>

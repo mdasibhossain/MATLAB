@@ -1,24 +1,24 @@
-clc;clear;
-%Given that;
+clc;clear all;
+
+clc;clear all;
+%Given that
+syms v(x) m k v0_sym
+%Differntial Equation 
+% dv/dx=(-k/m)*v.^2.*v.^3*(x+1).^3
+ode_eqn=diff(v,x)==(-k/m)*v^2*(x+1)^3;
+cond=v(0)==v0_sym;
+v_sol(x)=dsolve(ode_eqn,cond)
+
+%For Numerical Calculation
+k=30.0;
 m=1500;
-v0=25;
-k=30;
-xspan=[0 3];
-%Define ODE
-f=@(x,v)(-k/m)*v.^2*(x+1).^3;
-%SolVe ODE
-[x_num,v_num]=ode23(f,xspan,v0);
+v0=90*(1000/3600);
+ode_fun=@(x,v)(-k/m)*(v.^2)*(x+1).^3;
 
-syms v(x)  % declare symbolic function
-% Directly write symbolic ODE
-ode_sym = diff(v,x)== -(k/m)*v^2*(x+1)^3; 
-% Initial condition
-cond = v(0) == v0;
-
-v_exact = dsolve(ode_sym, cond);
-v_exact = simplify(v_exact);
-disp((v_exact))
-plot(x_num,v_num,'b');
-grid on;
-xlabel("Position x(m)");
-ylabel("Velocity v(m/s)");
+x_span=[0 3];
+[x v]=ode45(ode_fun,x_span,v0);
+%Ploting Velocity Vs Position
+plot(x,v,'r-','Linewidth',2.5)
+grid on
+xlabel("x(m)")
+ylabel("v(m/s)")
